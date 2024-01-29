@@ -1,29 +1,25 @@
 package com.example.service;
 
+import com.example.model.Data;
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 import com.google.inject.persist.Transactional;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 
 public class DataServiceImpl implements DataService {
 
-    private final EntityManagerFactory emf;
-
     @Inject
-    public DataServiceImpl(EntityManagerFactory emf) {
-        this.emf = emf;
-    }
+    Provider<EntityManager> emProvider;
 
     @Transactional
     @Override
-    public Data createData(Data data) {
-        EntityManager em = emf.createEntityManager();
+    public Data insertData(Data data) {
+        EntityManager em = emProvider.get();
         try {
             em.persist(data);
         } finally {
             em.close();
         }
-		return data;
-    }	
+        return data;
+    }
 }
-

@@ -1,5 +1,6 @@
 package com.example.service;
+import com.example.model.Data;
 
 public interface DataService {
-    Data createData(Data data);
+    Data insertData(Data data);
 }
