@@ -13,7 +13,7 @@ public class MyServletContextListener extends GuiceResteasyBootstrapServletConte
 
     @Override
     protected List<Module> getModules(ServletContext context) {
-        return Arrays.asList(new JpaPersistModule("restguice"), new GuiceModule());
+        return Arrays.asList(new JpaPersistModule("restguice"), new RestServletModule());
     }
 
     @Override
