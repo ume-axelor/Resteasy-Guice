@@ -7,7 +7,14 @@ import com.example.model.Laptop;
 
 public interface StudentLaptopService {
 
-    void addData(String name, List<Laptop> laptops);
+   void addData(String name, List<Laptop> laptops);
+   
+   void updateData(int id, String name, List<Laptop> laptops);
 
-    List<Student> getAllData();
+   List<Student> getAllData();
+
+   void deleteData(int id);
+   
+   Student getStudent(int id);
+    
 }

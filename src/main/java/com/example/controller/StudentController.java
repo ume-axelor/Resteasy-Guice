@@ -13,7 +13,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
-
 import com.google.inject.Inject;
 import com.example.model.Student;
 import com.example.model.Laptop;
@@ -49,6 +48,41 @@ public class StudentController {
         }
         studentLaptopService.addData(name, laptops);
         response.sendRedirect(request.getContextPath());
+    }
+    
+    @Path("/delete")
+    @GET
+    public void deleteStudent(@QueryParam("id") int id, @Context HttpServletRequest request,
+            @Context HttpServletResponse response) throws ServletException, IOException {
+        studentLaptopService.deleteData(id);
+        response.sendRedirect(request.getContextPath());
+    }
+
+    @Path("/edit")
+    @GET
+    public void editStudent(@QueryParam("id") int id, @Context HttpServletRequest request,
+            @Context HttpServletResponse response) throws ServletException, IOException {
+        Student studentDetail = studentLaptopService.getStudent(id);
+        request.setAttribute("studentDetail", studentDetail);
+        request.getRequestDispatcher("/insert.jsp").forward(request, response);
+    }
+
+    @Path("/update")
+    @POST
+    public void updateStudent(@QueryParam("id") int id, @FormParam("sname") String name,
+            @FormParam("brand") String[] brands, @FormParam("model") String[] models,
+            @Context HttpServletRequest request, @Context HttpServletResponse response)
+            throws ServletException, IOException {
+
+        List<Laptop> laptops = new ArrayList<>();
+        for (int i = 0; i < brands.length; i++) {
+            Laptop laptop = new Laptop();
+            laptop.setBrand(brands[i]);
+            laptop.setModel(models[i]);
+            laptops.add(laptop);
+        }
+        studentLaptopService.updateData(id, name, laptops);
+        response.sendRedirect(request.getContextPath() + "/get");
     }
 
 }

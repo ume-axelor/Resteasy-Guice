@@ -32,6 +32,7 @@
                 <th>Name</th>
                 <th>Laptop Brand</th>
                 <th>Laptop Model</th>
+                <th>Action</th>
             </tr>
             
             <c:forEach items="${list}" var="student">
@@ -40,9 +41,32 @@
                     <td><c:out value="${student.sname}" /></td>
                     <td><c:out value="${student.laptops[0].brand}" /></td>
                     <td><c:out value="${student.laptops[0].model}" /></td>
+                    <td>
+                        <a href="${pageContext.request.contextPath}/edit?id=${student.sid}">Edit</a>
+                        /
+                        <a href="${pageContext.request.contextPath}/delete?id=${student.sid}">Delete</a>
+                    </td>
                 </tr>
             </c:forEach>
         </table>
+
+        <br><br><br>
+
+        <c:if test="${not empty studentDetail}">
+            <form action="${pageContext.request.contextPath}/update" method="post">
+                <input type="hidden" name="id" value="${studentDetail.sid}" />
+                <label>Edit Name:</label>
+                <input type="text" name="sname" required placeholder="Student Name" value="${studentDetail.sname}" />
+                
+                <label>Edit Laptop Brand:</label>
+                <input type="text" name="brand" required placeholder="Laptop Brand" value="${studentDetail.laptops[0].brand}" />
+                
+                <label>Edit Laptop Model:</label>
+                <input type="text" name="model" required placeholder="Laptop Model" value="${studentDetail.laptops[0].model}" />
+                
+                <input type="submit" value="Update" name="button" />
+            </form>
+        </c:if>
     </div>
 </body>
 </html>
