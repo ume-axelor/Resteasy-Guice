@@ -10,7 +10,7 @@
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/restguice"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/restcrud"/>
             <property name="javax.persistence.jdbc.user" value="axelor"/>
             <property name="javax.persistence.jdbc.password" value="axelor"/>
         </properties>

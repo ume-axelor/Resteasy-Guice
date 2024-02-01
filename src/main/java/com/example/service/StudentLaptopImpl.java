@@ -1,6 +1,5 @@
 package com.example.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import com.google.inject.Inject;
@@ -49,15 +48,18 @@ public class StudentLaptopImpl implements StudentLaptopService {
 
         for (Laptop laptop : laptops) {
             Laptop l = laptopList.get(counter);
-            if (!laptop.getSerialNumber().equals(laptopList.get(counter).getSerialNumber())) {
-                l.setSerialNumber(laptop.getSerialNumber());
+            if (!laptop.getBrand().equals(l.getBrand())) {
+                l.setBrand(laptop.getBrand());
             }
-            if (!laptop.getModel().equals(laptopList.get(counter).getModel())) {
+
+            if (!laptop.getModel().equals(l.getModel())) {
                 l.setModel(laptop.getModel());
             }
+
             counter++;
         }
     }
+
     
     @Override
     @Transactional

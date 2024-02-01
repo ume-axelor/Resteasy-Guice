@@ -5,67 +5,78 @@
 <head>
     <meta charset="UTF-8">
     <title>Student and Laptop Form</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 50%;
+            text-align: center;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+        }
+    </style>
 </head>
 <body>
     <div align="center">
-        <form action="${pageContext.request.contextPath}/add" method="post">            
-            <label>Name:</label>
-            <input type="text" name="sname" required placeholder="Student Name" />
-            
-            <label>Laptop Brand:</label>
-            <input type="text" name="brand" required placeholder="Laptop Brand" />
-            
-            <label>Laptop Model:</label>
-            <input type="text" name="model" required placeholder="Laptop Model" />
-            
-            <input type="submit" value="Submit" name="button" />
-        </form>
-        
-        <br><br><br>
-        
-        <table border="1" width="50%" style="text-align: center;">
-            <caption>
-                <h2>List of Students</h2>
-            </caption>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Laptop Brand</th>
-                <th>Laptop Model</th>
-                <th>Action</th>
-            </tr>
-            
-            <c:forEach items="${list}" var="student">
+        <c:if test="${studentDetail == null }">
+            <form action="${pageContext.request.contextPath}/add" method="post">
+        </c:if>
+        <c:if test="${studentDetail != null }">
+            <form action="${pageContext.request.contextPath }/update?id=${studentDetail.sid}" method="post">
+        </c:if>
+            <table>
+                <caption>
+                    <h3>Enter Student Details</h3>
+                </caption>
                 <tr>
-                    <td><c:out value="${student.sid}" /></td>
-                    <td><c:out value="${student.sname}" /></td>
-                    <td><c:out value="${student.laptops[0].brand}" /></td>
-                    <td><c:out value="${student.laptops[0].model}" /></td>
-                    <td>
-                        <a href="${pageContext.request.contextPath}/edit?id=${student.sid}">Edit</a>
-                        /
-                        <a href="${pageContext.request.contextPath}/delete?id=${student.sid}">Delete</a>
-                    </td>
+                    <td align="right">Name:</td>
+                    <td><input type="text" name="sname" required placeholder="Student Name" value="${studentDetail.sname}"/></td>
                 </tr>
-            </c:forEach>
-        </table>
+                <tr>
+                    <td align="right">Laptop Brand:</td>
+                    <td><input type="text" name="brand" required placeholder="Laptop Brand" value="${studentDetail.laptops[0].brand}"/></td>
+                </tr>
+                <tr>
+                    <td align="right">Laptop Model:</td>
+                    <td><input type="text" name="model" required placeholder="Model" value="${studentDetail.laptops[0].model}"/></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center"><input type="submit" value="Submit" name="button" /></td>
+                </tr>
+            </table>
+        </form>
 
         <br><br><br>
 
-        <c:if test="${not empty studentDetail}">
-            <form action="${pageContext.request.contextPath}/update" method="post">
-                <input type="hidden" name="id" value="${studentDetail.sid}" />
-                <label>Edit Name:</label>
-                <input type="text" name="sname" required placeholder="Student Name" value="${studentDetail.sname}" />
+        <c:if test="${studentDetail == null }">
+            <table>
+                <caption>
+                    <h2>List of Students</h2>
+                </caption>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Laptop Brand</th>
+                    <th>Laptop Model</th>
+                    <th>Action</th>
+                </tr>
                 
-                <label>Edit Laptop Brand:</label>
-                <input type="text" name="brand" required placeholder="Laptop Brand" value="${studentDetail.laptops[0].brand}" />
-                
-                <label>Edit Laptop Model:</label>
-                <input type="text" name="model" required placeholder="Laptop Model" value="${studentDetail.laptops[0].model}" />
-                
-                <input type="submit" value="Update" name="button" />
-            </form>
+                <c:forEach items="${list}" var="student">
+                    <tr>
+                        <td><c:out value="${student.sid}" /></td>
+                        <td><c:out value="${student.sname}" /></td>
+                        <td><c:out value="${student.laptops[0].brand}" /></td>
+                        <td><c:out value="${student.laptops[0].model}" /></td>
+                        <td>
+                            <a href="${pageContext.request.contextPath}/edit?id=${student.sid}">Edit</a>
+                            /
+                            <a href="${pageContext.request.contextPath}/delete?id=${student.sid}">Delete</a>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </table>
         </c:if>
     </div>
 </body>
